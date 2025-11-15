@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Diário Alimentar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <a th:href="@{/}" class="btn-primary">Voltar para o início</a>
+    </div>
+</nav>
+
+<main class="login-main">
+    <div class="container">
+
+        <div class="form-box-main">
+            <h2>Registrar novo alimento</h2>
+            <form th:action="@{/foodDiary}" th:object="${newEntry}" method="post">
+                <div>
+                    <label for="alimento">Alimento Introduzido:</label>
+                    <input type="text" id="alimento" th:field="*{alimento}"
+                           placeholder="Ex: Pão sem glúten, iogurte..." required>
+                </div>
+                <div>
+                    <label for="observacoes">Observações (Digestão, sintomas, etc.):</label>
+                    <textarea id="observacoes" th:field="*{observacoes}"
+                              placeholder="Ex: Digestão normal, sem reações."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Salvar no Diário</button>
+            </form>
+        </div>
+
+        <div class="content-box-main">
+            <h2 class="content-box-title">Histórico</h2>
+
+            <div th:if="${successMessage}" class="alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert-error" th:text="${errorMessage}"></div>
+
+            <div th:unless="${entries.isEmpty()}">
+                <ul class="diary-list">
+                    <li th:each="entry : ${entries}" class="diary-item">
+                        <h3 th:text="${entry.alimento}"></h3>
+                        <p th:text="${#temporals.format(entry.dataHora, 'dd/MM/yyyy HH:mm')}"></p>
+                        <p th:text="${entry.observacoes}"></p>
+                        <form th:action="@{/foodDiary/delete/{id}(id=${entry.id})}"
+                              method="post"
+                              onsubmit="return confirm('Tem certeza que deseja excluir este registro?');"
+                              style="margin-top: 1rem;">
+                            <button type="submit" class="btn-danger">Excluir Registro</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${entries.isEmpty()}" class="empty-history">
+                <p>Seu diário alimentar está vazio.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>

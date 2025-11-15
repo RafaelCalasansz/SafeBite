@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <span class="navbar-user">
+            Olá, <span th:text="${user.nome}"></span>
+        </span>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">
+            <button type="submit" class="btn-primary">Sair</button>
+        </form>
+    </div>
+</nav>
+
+<main class="login-main">
+
+    <div class="container">
+        <h1 class="home-title">Bem-vindo ao seu painel</h1>
+        <p class="home-subtitle">Gerencie sua saúde alimentar e reações em um só lugar.</p>
+
+        <div class="home-grid">
+            <a th:href="@{/reactions/new}" class="home-card">
+                <div class="home-card-icon">
+                    <i class="fa-solid fa-triangle-exclamation fa-3x"></i>
+                </div>
+                <div class="home-card-content">
+                    <h3>Registrar Nova Reação</h3>
+                    <p>Adicione detalhes sobre uma reação alérgica que você sofreu.</p>
+                </div>
+            </a>
+            <a th:href="@{/emergencyCard/view}" class="home-card">
+                <div class="home-card-icon">
+                    <i class="fa-solid fa-id-card-clip fa-3x"></i>
+                </div>
+                <div class="home-card-content">
+                    <h3>Carteirinha de Emergência</h3>
+                    <p>Visualize e edite suas informações de emergência.</p>
+                </div>
+            </a>
+            <a th:href="@{/history}" class="home-card">
+                <div class="home-card-icon">
+                    <i class="fa-solid fa-notes-medical fa-3x"></i>
+                </div>
+                <div class="home-card-content">
+                    <h3>Meu Histórico de Reações</h3>
+                    <p>Consulte todos os registros de reações anteriores.</p>
+                </div>
+            </a>
+            <a th:href="@{/foodDiary}" class="home-card">
+                <div class="home-card-icon">
+                    <i class="fa-solid fa-book-medical fa-3x"></i>
+                </div>
+                <div class="home-card-content">
+                    <h3>Meu Diário Alimentar</h3>
+                    <p>Acompanhe os alimentos que você consome diariamente.</p>
+                </div>
+            </a>
+        </div>
+        <div class="home-grid-fullwidth">
+            <a th:href="@{/myRestrictions}" class="home-card">
+                <div class="home-card-icon">
+                    <i class="fa-solid fa-ban fa-3x"></i>
+                </div>
+                <div class="home-card-content">
+                    <h3>Minhas Restrições</h3>
+                    <p>Gerencie sua lista de alergias e intolerâncias conhecidas.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>

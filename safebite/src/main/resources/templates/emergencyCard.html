@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Editar Carteirinha</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <a th:href="@{/emergencyCard/view}" class="btn-primary">Ver Carteirinha</a>
+    </div>
+</nav>
+
+<main class="login-main">
+    <div class="container">
+
+        <div class="form-box-main">
+            <h1>Editar Carteirinha de Emergência</h1>
+            <p>Mantenha estas informações sempre atualizadas.</p>
+
+            <div th:if="${errorMessage}" class="alert-error" th:text="${errorMessage}"></div>
+
+            <form th:action="@{/emergencyCard}" th:object="${card}" method="post">
+                <div>
+                    <label for="contatosEmergencia">Contatos de Emergência:</label>
+                    <textarea id="contatosEmergencia" th:field="*{contatosEmergencia}"
+                              placeholder="Ex: Mãe (11) 99999-8888, Dr. Silva (11) 5555-4444..."></textarea>
+                </div>
+                <div>
+                    <label for="medicamentosContinuos">Medicamentos de Uso Contínuo:</label>
+                    <textarea id="medicamentosContinuos" th:field="*{medicamentosContinuos}"
+                              placeholder="Ex: Losartana 50mg (1x dia), ..."></textarea>
+                </div>
+                <div>
+                    <label for="instrucoesMedicas">Instruções Médicas / Alergias Graves:</label>
+                    <textarea id="instrucoesMedicas" th:field="*{instrucoesMedicas}"
+                              placeholder="Ex: ALERGIA SEVERA A AMENDOIM. Em caso de reação, aplicar EpiPen imediatamente e chamar 192..."></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn-primary btn-block">Atualizar Carteirinha</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>

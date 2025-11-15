@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Registro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="login-page-body">
+
+<header class="login-header">
+    <h1>SafeBite</h1>
+</header>
+
+<main class="login-main">
+
+    <div class="login-form-box">
+
+        <h2>Registro</h2>
+
+        <div th:if="${user != null && user.email != null}" class="alert-error">
+            Já existe um usuário com este email.
+        </div>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" required>
+            </div>
+            <div>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" th:field="*{password}" required>
+            </div>
+
+            <div>
+                <button type="submit" class="btn-primary btn-block">Registrar</button>
+            </div>
+
+            <div>
+                <a th:href="@{/login}" class="btn-secondary btn-block">Já tem uma conta? Faça login</a>
+            </div>
+        </form>
+
+    </div>
+
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>

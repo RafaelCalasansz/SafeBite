@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Histórico</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <a th:href="@{/}" class="btn-primary">Voltar para o início</a>
+    </div>
+</nav>
+
+<main class="login-main">
+    <div class="container">
+
+        <div class="content-box-main">
+            <h1 class="content-box-title">Meu Histórico de Reações</h1>
+
+            <div th:if="${successMessage}" class="alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert-error" th:text="${errorMessage}"></div>
+
+            <div th:unless="${reactions.isEmpty()}">
+                <ul class="reaction-list">
+                    <li th:each="reaction : ${reactions}" class="reaction-item">
+                        <h3 th:text="${#temporals.format(reaction.dataHoraReacao, 'dd/MM/yyyy HH:mm')}"></h3>
+                        <p><strong>Alimentos:</strong> <span th:text="${reaction.alimentosConsumidos}"></span></p>
+                        <p><strong>Sintomas:</strong> <span th:text="${reaction.intensidadeSintomas}"></span></p>
+                        <p><strong>Local:</strong> <span th:text="${reaction.localOcorrencia}"></span></p>
+                        <p><strong>Medicamentos:</strong> <span th:text="${reaction.medicamentosUtilizados}"></span></p>
+                        <p><strong>Observações:</strong> <span th:text="${reaction.evolucaoQuadro}"></span></p>
+                        <form th:action="@{/history/delete/{id}(id=${reaction.id})}"
+                              method="post"
+                              onsubmit="return confirm('Tem certeza que deseja excluir esta reação?');"
+                              style="margin-top: 1rem;">
+                            <button type="submit" class="btn-danger">Excluir Reação</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>

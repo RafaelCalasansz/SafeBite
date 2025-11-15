@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Minhas Restrições</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <a th:href="@{/}" class="btn-primary">Voltar para o início</a>
+    </div>
+</nav>
+
+<main class="login-main">
+    <div class="container">
+
+        <div class="form-box-main">
+            <h1>Minhas Restrições Alimentares</h1>
+            <p>Selecione todas as alergias e intolerâncias que você possui.</p>
+
+            <div th:if="${successMessage}" class="alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert-error" th:text="${errorMessage}"></div>
+
+            <form th:action="@{/myRestrictions}" method="post">
+                <div class="checkbox-grid">
+
+                    <div th:each="restriction : ${allRestrictions}" class="checkbox-item-wrapper">
+                        <div class="checkbox-item">
+                            <input type="checkbox"
+                                   name="restrictionIds"
+                                   th:id="'res-' + ${restriction.id}"
+                                   th:value="${restriction.id}"
+                                   th:checked="${myRestrictions.contains(restriction)}">
+                            <label th:for="'res-' + ${restriction.id}"
+                                   th:text="${restriction.nome}"></label>
+                        </div>
+
+                        <a th:if="${restriction.descricao == 'Restrição adicionada pelo usuário.'}"
+                           th:href="@{/myRestrictions/delete/{id}(id=${restriction.id})}"
+                           class="btn-delete-icon"
+                           title="Excluir restrição"
+                           onclick="return confirm('Tem certeza que deseja excluir esta restrição? Ela será removida permanentemente do sistema.');">
+                            &times;
+                        </a>
+                    </div>
+
+                    <div class="checkbox-item-wrapper">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="outra-checkbox">
+                            <label for="outra-checkbox">Outra (especifique)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="outra-texto-div">
+                    <input type="text" id="outra-texto-input" name="outraRestricao"
+                           placeholder="Digite sua restrição aqui...">
+                </div>
+
+                <button type="submit" class="btn-primary">Salvar Minhas Restrições</button>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    $(document).ready(function() {
+        var outraCheckbox = $('#outra-checkbox');
+        var outraTextoDiv = $('#outra-texto-div');
+        var outraTextoInput = $('#outra-texto-input');
+
+        outraCheckbox.on('change', function() {
+            if (outraCheckbox.is(':checked')) {
+                outraTextoDiv.css('display', 'flex');
+                outraTextoInput.prop('required', true);
+            } else {
+                outraTextoDiv.css('display', 'none');
+                outraTextoInput.val('');
+                outraTextoInput.prop('required', false);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

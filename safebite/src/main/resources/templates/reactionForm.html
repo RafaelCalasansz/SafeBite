@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeBite - Registrar Reação</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="home-page-body">
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">SafeBite</a>
+    <div class="navbar-links">
+        <a th:href="@{/}" class="btn-primary">Voltar para o início</a>
+    </div>
+</nav>
+
+<main class="login-main">
+
+    <div class="container">
+
+        <div class="form-box-main">
+            <h1>Registrar Nova Reação</h1>
+            <p>Descreva o que aconteceu. Esta informação será salva no seu histórico clínico.</p>
+
+            <form th:action="@{/reactions/new}" th:object="${reaction}" method="post">
+
+                <div class="form-grid">
+
+                    <div class="form-grid-span-2">
+                        <label for="alimentosConsumidos">Alimentos Consumidos:</label>
+                        <input type="text" id="alimentosConsumidos" th:field="*{alimentosConsumidos}"
+                               placeholder="Ex: Pão com amendoim, camarão..." required>
+                    </div>
+
+                    <div>
+                        <label for="intensidadeSintomas">Intensidade dos Sintomas:</label>
+                        <select id="intensidadeSintomas" th:field="*{intensidadeSintomas}" required>
+                            <option value="" disabled selected>Selecione a intensidade</option>
+                            <option value="Leve">Leve</option>
+                            <option value="Moderada">Moderada</option>
+                            <option value="Severa">Severa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="medicamentosUtilizados">Medicamentos Utilizados:</label>
+                        <input type="text" id="medicamentosUtilizados" th:field="*{medicamentosUtilizados}"
+                               placeholder="Ex: Antialérgico, adrenalina...">
+                    </div>
+
+                    <div>
+                        <label for="localOcorrencia">Local da Ocorrência:</label>
+                        <input type="text" id="localOcorrencia" th:field="*{localOcorrencia}"
+                               placeholder="Ex: Em casa, restaurante, escola...">
+                    </div>
+                    <div>
+                        <label for="dataHoraReacao">Data e Hora da Reação:</label>
+                        <input type="datetime-local" id="dataHoraReacao" th:field="*{dataHoraReacao}" required>
+                    </div>
+
+                    <div class="form-grid-span-2">
+                        <label for="evolucaoQuadro">Evolução / Observações:</label>
+                        <textarea id="evolucaoQuadro" th:field="*{evolucaoQuadro}"
+                                  placeholder="Descreva os sintomas e como o quadro evoluiu..."></textarea>
+                    </div>
+
+                    <div class="form-grid-span-2">
+                        <button type="submit" class="btn-primary btn-block">Salvar Reação</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer class="login-footer">
+    <p>© 2025 SafeBite. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
