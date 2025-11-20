@@ -67,3 +67,42 @@ CREATE TABLE usuario_restricoes (
                                     CONSTRAINT fk_user_link FOREIGN KEY (user_id) REFERENCES usuarios (id),
                                     CONSTRAINT fk_restriction_link FOREIGN KEY (restriction_id) REFERENCES restricoes (id)
 );
+
+CREATE OR REPLACE VIEW view_relatorio_reacoes AS
+SELECT
+    r.id AS reacao_id,
+    u.nome AS nome_paciente,
+    u.email AS email_paciente,
+    r.alimentos_consumidos,
+    r.intensidade_sintomas,
+    r.data_hora_reacao,
+    r.local_ocorrencia
+FROM reacoes r
+         JOIN usuarios u ON r.user_id = u.id;
+
+
+
+CREATE OR REPLACE FUNCTION fn_contar_reacoes(p_user_id BIGINT)
+RETURNS INTEGER AS $$
+DECLARE
+qtd INTEGER;
+BEGIN
+SELECT COUNT(*) INTO qtd
+FROM reacoes
+WHERE user_id = p_user_id;
+
+RETURN qtd;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+   CREATE OR REPLACE PROCEDURE sp_excluir_reacoes_antigas(p_dias INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+DELETE FROM reacoes
+WHERE data_hora_reacao < NOW() - (p_dias || ' days')::INTERVAL;
+END;
+$$;
